@@ -35,13 +35,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private void loginSuccess(HttpServletRequest request,HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
         String accessToken = jwtService.createAccessToken(oAuth2User.getNickname());
         String refreshToken = jwtService.createRefreshToken();
-        response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
-        response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
+//        response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
+//        response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
 
         jwtService.sendAccessAndRefreshToken(response, "Bearer " +accessToken, "Bearer " +refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getNickname(), refreshToken);
 
         redirectStrategy.sendRedirect(request, response,"localhost:3000/login/info");
-
+        log.info("accessToken, RefreshToken 발급 완료!");
     }
 }

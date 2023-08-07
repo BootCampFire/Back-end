@@ -47,12 +47,12 @@ public class UserController {
 
     @ApiOperation("닉네임 중복 검사")
     @PostMapping("/duplication")
-    public BaseResponseDto<String> duplicationCheck(@RequestBody String nickname){
-        boolean state = userService.nickanameDuplicationCheck(nickname);
+    public BaseResponseDto<String> duplicationCheck(@RequestBody User user){
+        boolean state = userService.nickanameDuplicationCheck(user.getNickname());
         if(!state){
-            return BaseResponseDto.message(nickname,"이미 사용 중인 닉네임입니다.");
+            return BaseResponseDto.message(user.getNickname(),"이미 사용 중인 닉네임입니다.");
         }
-        return BaseResponseDto.ok(nickname);
+        return BaseResponseDto.message(user.getNickname(), user.getNickname()+"은 사용 가능한 닉네임입니다.");
     }
 
     @ApiOperation("소속 인증 요청하기")
