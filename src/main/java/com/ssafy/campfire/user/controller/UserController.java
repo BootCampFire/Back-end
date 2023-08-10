@@ -17,8 +17,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,9 +34,24 @@ public class UserController {
     public String jwtTest() {
         return "jwtTest success";
     }
+    @GetMapping("/login-success/**")
+    public BaseResponseDto<Map<String, String>> success(HttpServletRequest request) {
+        String ans = request.getRequestURI();
+        int start_index = ans.indexOf("At=");
+        int end_index = ans.indexOf("Rt=");
+        String accessToken = ans.substring(start_index+3, end_index-1);
+        String refreshToken = ans.substring(end_index+3);
+        System.out.println("accessToken = "+accessToken);
+        System.out.println("refreshToken = "+refreshToken);
+
+        Map<String, String> token = new HashMap<>();
+        token.put("accesstoken", accessToken);
+        token.put("refreshtoken", refreshToken);
+        return BaseResponseDto.ok(token);
+    }
 
     @ApiOperation(value ="개인 정보 조회")
-    @GetMapping("")
+    @GetMapping({"","/"})
     public BaseResponseDto<UserReadResponse> userInfo(@AuthenticationPrincipal PrincipalDetails user) {
         return BaseResponseDto.ok(userService.read(user.getId()));
     }

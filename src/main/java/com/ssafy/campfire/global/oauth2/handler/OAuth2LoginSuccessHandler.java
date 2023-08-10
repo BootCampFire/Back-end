@@ -41,7 +41,9 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         jwtService.sendAccessAndRefreshToken(response, "Bearer " +accessToken, "Bearer " +refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getNickname(), refreshToken);
 
-        redirectStrategy.sendRedirect(request, response,"localhost:3000/login/info");
         log.info("accessToken, RefreshToken 발급 완료!");
+
+        redirectStrategy.sendRedirect(request,response,"/users/login-success/At="+accessToken+"+Rt="+refreshToken);
+
     }
 }
