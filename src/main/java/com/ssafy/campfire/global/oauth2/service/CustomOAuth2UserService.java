@@ -4,6 +4,7 @@ import com.ssafy.campfire.bootcamp.domain.Bootcamp;
 import com.ssafy.campfire.bootcamp.repository.BootcampRepository;
 import com.ssafy.campfire.global.oauth2.CustomOAuth2User;
 import com.ssafy.campfire.global.oauth2.OAuthAttributes;
+import com.ssafy.campfire.global.oauth2.PrincipalDetails;
 import com.ssafy.campfire.user.domain.SocialType;
 import com.ssafy.campfire.user.domain.User;
 import com.ssafy.campfire.user.repository.UserRepository;
@@ -63,13 +64,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // DefaultOAuth2User를 구현한 CustomOAuth2User 객체를 생성해서 반환
         //return new DefaultOAuth2User(Collections singleton(new SimpleGrantedAuthority(createdUser.getRole().getKey())))
-        return new CustomOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().getKey())),
-                attributes,
-                extractAttributes.getNameAttributeKey(),
-                createdUser.getNickname(),
-                createdUser.getRole()
-        );
+//        return new CustomOAuth2User(
+//                Collections.singleton(new SimpleGrantedAuthority(createdUser.getRole().getKey())),
+//                attributes,
+//                extractAttributes.getNameAttributeKey(),
+//                createdUser.getNickname(),
+//                createdUser.getRole()
+//        );
+        return new PrincipalDetails(createdUser, attributes);
     }
 
     private SocialType getSocialType(String registrationId) {

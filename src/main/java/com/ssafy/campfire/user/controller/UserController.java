@@ -1,6 +1,7 @@
 package com.ssafy.campfire.user.controller;
 
 import com.ssafy.campfire.global.jwt.service.JwtService;
+import com.ssafy.campfire.global.oauth2.CustomOAuth2User;
 import com.ssafy.campfire.global.oauth2.PrincipalDetails;
 import com.ssafy.campfire.user.domain.User;
 import com.ssafy.campfire.user.dto.request.UserPermissionRequest;

@@ -145,19 +145,19 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
             password = PasswordUtil.generateRandomPassword();
         }
 
-//        UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
-//                .username(myUser.getNickname())
-//                .password(password)
-//                .roles(myUser.getRole().name())
-//                .build();
-        PrincipalDetails principalDetails = new PrincipalDetails(myUser);
+        UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
+                .username(myUser.getNickname())
+                .password(password)
+                .roles(myUser.getRole().name())
+                .build();
+        //PrincipalDetails principalDetails = new PrincipalDetails(myUser);
 
-//        Authentication authentication =
-//                new UsernamePasswordAuthenticationToken(userDetailsUser, null,
-//                authoritiesMapper.mapAuthorities(userDetailsUser.getAuthorities()));
         Authentication authentication =
-                new UsernamePasswordAuthenticationToken(principalDetails, null,
-                authoritiesMapper.mapAuthorities(principalDetails.getAuthorities()));
+                new UsernamePasswordAuthenticationToken(userDetailsUser, null,
+                authoritiesMapper.mapAuthorities(userDetailsUser.getAuthorities()));
+//        Authentication authentication =
+//                new UsernamePasswordAuthenticationToken(principalDetails, null,
+//                authoritiesMapper.mapAuthorities(principalDetails.getAuthorities()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
